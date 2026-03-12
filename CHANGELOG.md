@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.0...v1.0.1) (2026-03-12)
+
+### Bug Fixes
+
+* adiciona publishConfig com access public para permitir publicação com provenance ([f5d1ae1](https://github.com/stackflow-lab/tef-elgin/commit/f5d1ae146370a84b421e98fd704061aa9c269785))
+
 ## 1.0.0 (2026-03-12)
 
 ### Features
