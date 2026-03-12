@@ -431,18 +431,20 @@ export class Client extends EventEmitter {
     if (type && !option) {
       // Free-text collect
       this._log('📝 Emitting collect:text', { message, type, mask })
+      const collectPromise = this._waitCollect()
       this.emit('display', message)
       this.emit('collect:text', { message, type, mask })
-      const result = await this._waitCollect()
+      const result = await collectPromise
       info = result.info
       shouldCancel = result.cancel
     } else if (type && option) {
       // Option list collect
       const options = option.split(';').filter(Boolean)
       this._log('🔘 Emitting collect:options', { message, options })
+      const collectPromise = this._waitCollect()
       this.emit('display', message)
       this.emit('collect:options', { message, options })
-      const result = await this._waitCollect()
+      const result = await collectPromise
       info = options[Number(result.info)] ?? result.info
       shouldCancel = result.cancel
     } else {
