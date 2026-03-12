@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.1...v1.0.2) (2026-03-12)
+
+### Bug Fixes
+
+* restaura provenance (requer tornar repositório público no GitHub) ([ce51d9d](https://github.com/stackflow-lab/tef-elgin/commit/ce51d9dc7d2c7d4253b88f105af8e9d33ff30175))
+* update repository references and improve documentation consistency ([24e94d0](https://github.com/stackflow-lab/tef-elgin/commit/24e94d0d66ec8d79a8f9c64b2f578a4f974eeb4e))
+
 ## [1.0.1](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.0...v1.0.1) (2026-03-12)
 
 ### Bug Fixes
