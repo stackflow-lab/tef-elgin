@@ -1,3 +1,17 @@
+## [2.0.0](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.3...v2.0.0) (2026-03-12)
+
+### ⚠ BREAKING CHANGES
+
+* All payment methods (pix, credit, debit, voucher, ask) now accept amount as number instead of string. The SDK automatically formats values to 2 decimal places.
+
+### Features
+
+* change payment methods to accept number instead of string ([9ec9897](https://github.com/stackflow-lab/tef-elgin/commit/9ec9897d346d02a172ac4bc7868d45296f2d7565))
+
+### Bug Fixes
+
+* remove unnecessary git commands and improve DLL loading logic ([93b25ed](https://github.com/stackflow-lab/tef-elgin/commit/93b25edfae8bfd9c377a54105af5acfccd821eeb))
+
 ## [1.0.3](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.2...v1.0.3) (2026-03-12)
 
 ### Bug Fixes
