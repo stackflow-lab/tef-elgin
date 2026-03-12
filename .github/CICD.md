@@ -64,6 +64,8 @@ Isso garante que:
 - ✅ Provenance statements são gerados automaticamente
 - ✅ Maior segurança usando tokens granulares do NPM
 
+> **⚠️ IMPORTANTE**: Provenance do NPM **requer repositório público no GitHub**. Vá em Settings do repositório > General > Danger Zone > Change repository visibility > Make public.
+
 ## Commits Semânticos
 
 O projeto usa **Conventional Commits** para gerar versões automaticamente:
@@ -133,8 +135,6 @@ git commit -m "feat: implementa retry automático
 
 ### 1. NPM Token (Granular Access Token)
 
-O projeto usa **Trusted Publishing** com provenance para maior segurança na publicação.
-
 Crie um **Granular Access Token** no NPM:
 
 1. Acesse https://www.npmjs.com/settings/YOUR_USERNAME/tokens
@@ -144,7 +144,7 @@ Crie um **Granular Access Token** no NPM:
    - **Expiration**: Escolha um período (recomendado: 1 ano)
    - **Packages and scopes**:
      - Selecione "Read and write"
-     - Escolha o pacote `@stackflowlab/elgin-sdk`
+     - Escolha o pacote `@stackflowlab/tef-elgin`
    - **Organizations**: Selecione sua organização se aplicável
 4. Copie o token (começa com `npm_...`)
 
@@ -154,8 +154,6 @@ Adicione como secret no GitHub:
 2. Clique em "New repository secret"
 3. Nome: `NPM_TOKEN`
 4. Valor: Cole o token do NPM
-
-> **Nota**: O workflow usa `NPM_CONFIG_PROVENANCE=true` para gerar provenance statements automaticamente, garantindo autenticidade e rastreabilidade dos pacotes publicados.
 
 ### 2. Permissões do GitHub Token
 
