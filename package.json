@@ -48,12 +48,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stackflowlab/elgin-sdk.git"
+    "url": "https://github.com/stackflow-lab/tef-elgin.git"
   },
   "bugs": {
-    "url": "https://github.com/stackflowlab/elgin-sdk/issues"
+    "url": "https://github.com/stackflow-lab/tef-elgin/issues"
   },
-  "homepage": "https://github.com/stackflowlab/elgin-sdk#readme",
+  "homepage": "https://github.com/stackflow-lab/tef-elgin#readme",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
