@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.2...v1.0.3) (2026-03-12)
+
+### Bug Fixes
+
+* otimiza workflows CI/CD e garante publicação no NPM ([9d0c130](https://github.com/stackflow-lab/tef-elgin/commit/9d0c130f519c2b1d8ce68822755a812cb37be818))
+
 ## [1.0.2](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.1...v1.0.2) (2026-03-12)
 
 ### Bug Fixes
