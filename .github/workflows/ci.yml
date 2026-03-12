@@ -1,21 +1,17 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - main
       - develop
+  push:
+    branches:
+      - develop
 
 jobs:
-  build-and-test:
+  test:
     runs-on: windows-latest
-
-    strategy:
-      matrix:
-        node-version: [22.x]
 
     steps:
       - name: Checkout code
@@ -24,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22.x
           cache: "npm"
 
       - name: Install dependencies
@@ -35,10 +31,3 @@ jobs:
 
       - name: Run tests
         run: npm test
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 7
