@@ -16,10 +16,9 @@ function loadDll(dllPath: string = DEFAULT_DLL_PATH) {
   if (!existsSync(dllPath)) {
     throw new Error(`DLL não encontrada: ${dllPath}`)
   }
-  git add .
-git commit -m "feat!: change payment methods to accept number instead of string
 
-BREAKING CHANGE: All payment methods (pix, credit, debit, voucher, ask) now accept amount as number instead of string. The SDK automatically formats values to 2 decimal places."
+  const lib = koffi.load(dllPath)
+
   return {
     GetProdutoTef: lib.func('__stdcall', 'GetProdutoTef', 'int', []),
     GetClientTCP: lib.func('__stdcall', 'GetClientTCP', 'string', []),
