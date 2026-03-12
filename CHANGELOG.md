@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.2...v2.0.3) (2026-03-12)
+
+### Bug Fixes
+
+* update worker path handling for CJS and ESM compatibility in Electron ([31aa46c](https://github.com/stackflow-lab/tef-elgin/commit/31aa46c85a01c6c145f341e35d464dceb17310ac))
+
 ## [2.0.2](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.1...v2.0.2) (2026-03-12)
 
 ### Bug Fixes
