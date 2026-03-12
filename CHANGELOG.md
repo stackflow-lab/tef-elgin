@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.0...v2.0.1) (2026-03-12)
+
+### Bug Fixes
+
+* translate error messages and comments from Portuguese to English ([c945142](https://github.com/stackflow-lab/tef-elgin/commit/c945142855cafb7006244faffbd16fd0ee54dd51))
+
 ## [2.0.0](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.3...v2.0.0) (2026-03-12)
 
 ### ⚠ BREAKING CHANGES
