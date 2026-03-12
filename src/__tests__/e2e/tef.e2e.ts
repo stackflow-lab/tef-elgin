@@ -58,7 +58,7 @@ function createE2EClient(rl: readline.Interface): Client {
 
   client.on('collect:text', ({ message, type, mask }: CollectTextEvent) => {
     // A resposta é coletada no handler — o evento já foi emitido antes do await
-    // O client ficará aguardando o respond() que virá do ask() abaixo
+    // O client ficará aguardando o input() que virá do ask() abaixo
     void ask(
       rl,
       `  → ${message} [tipo: ${type}${mask ? `, máscara: ${mask}` : ''}]: `,
@@ -66,7 +66,7 @@ function createE2EClient(rl: readline.Interface): Client {
       if (value === '') {
         client.cancel()
       } else {
-        client.respond(value)
+        client.input(value)
       }
     })
   })
@@ -79,7 +79,7 @@ function createE2EClient(rl: readline.Interface): Client {
       if (value === '') {
         client.cancel()
       } else {
-        client.respond(value)
+        client.input(value)
       }
     })
   })

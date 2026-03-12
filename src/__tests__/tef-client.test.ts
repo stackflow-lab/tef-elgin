@@ -58,7 +58,7 @@ describe('pay()', () => {
     client.on('approved', onApproved)
     client.on('finished', onFinished)
 
-    await client.payment.debit('50.00')
+    await client.payment.debit(50)
 
     expect(onApproved).toHaveBeenCalledOnce()
     expect(onApproved.mock.calls[0][0]).toMatchObject({ needsConfirmation: false })
@@ -77,7 +77,7 @@ describe('pay()', () => {
     client.on('print', onPrint)
     client.on('confirmed', onConfirmed)
 
-    await client.payment.credit('100.00')
+    await client.payment.credit(100)
 
     expect(onApproved.mock.calls[0][0]).toMatchObject({ needsConfirmation: true })
     expect(onPrint.mock.calls[0][0]).toMatchObject({
@@ -91,7 +91,7 @@ describe('pay()', () => {
   it('chama RealizarPagamentoTEF com novaTransacao=true na primeira chamada', async () => {
     const { client, dll } = createClient()
 
-    await client.payment.debit('25.00')
+    await client.payment.debit(25)
 
     expect(dll.RealizarPagamentoTEF).toHaveBeenCalledWith(
       2,
@@ -103,7 +103,7 @@ describe('pay()', () => {
   it('usa o valor em centavos (remove não-dígitos)', async () => {
     const { client, dll } = createClient()
 
-    await client.payment.ask('R$ 99,90')
+    await client.payment.ask(99.90)
 
     const callArg = JSON.parse(
       getMock(dll.RealizarPagamentoTEF).mock.calls[0][1],
@@ -114,7 +114,7 @@ describe('pay()', () => {
   it('chama FinalizarOperacaoTEF ao final', async () => {
     const { client, dll } = createClient()
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(dll.FinalizarOperacaoTEF).toHaveBeenCalledWith(1)
   })
@@ -127,7 +127,7 @@ describe('pay()', () => {
     const onDeclined = vi.fn()
     client.on('declined', onDeclined)
 
-    await client.payment.credit('10.00')
+    await client.payment.credit(10)
 
     expect(onDeclined).toHaveBeenCalledOnce()
     expect(onDeclined.mock.calls[0][0]).toBe('99')
@@ -140,7 +140,7 @@ describe('pix()', () => {
   it('chama RealizarPixTEF (não RealizarPagamentoTEF)', async () => {
     const { client, dll } = createClient()
 
-    await client.payment.pix('30.00')
+    await client.payment.pix(30)
 
     expect(dll.RealizarPixTEF).toHaveBeenCalledOnce()
     expect(dll.RealizarPagamentoTEF).not.toHaveBeenCalled()
@@ -151,7 +151,7 @@ describe('pix()', () => {
     const onApproved = vi.fn()
     client.on('approved', onApproved)
 
-    await client.payment.pix('30.00')
+    await client.payment.pix(30)
 
     expect(onApproved).toHaveBeenCalledOnce()
   })
@@ -168,7 +168,7 @@ describe('pix()', () => {
     client.on('qrcode', onQrCode)
     client.on('waiting', onWaiting)
 
-    await client.payment.pix('50.00')
+    await client.payment.pix(50)
 
     expect(onWaiting).toHaveBeenCalledOnce()
     expect(onQrCode).toHaveBeenCalledOnce()

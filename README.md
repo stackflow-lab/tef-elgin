@@ -2,8 +2,8 @@
 
 > SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos
 
-[![npm version](https://img.shields.io/npm/v/@stackflow-lab/elgin-sdk.svg)](https://www.npmjs.com/package/@stackflow-lab/elgin-sdk)
-[![License](https://img.shields.io/npm/l/@stackflow-lab/elgin-sdk.svg)](https://github.com/stackflow-lab/elgin-sdk/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@stackflow-lab/tef-elgin.svg)](https://www.npmjs.com/package/@stackflow-lab/tef-elgin)
+[![License](https://img.shields.io/npm/l/@stackflow-lab/tef-elgin.svg)](https://github.com/stackflow-lab/tef-elgin/blob/main/LICENSE)
 
 ## 📋 Índice
 
@@ -41,19 +41,19 @@
 ## 🚀 Instalação
 
 ```bash
-npm install @stackflow-lab/elgin-sdk
+npm install @stackflow-lab/tef-elgin
 ```
 
 ou
 
 ```bash
-yarn add @stackflow-lab/elgin-sdk
+yarn add @stackflow-lab/tef-elgin
 ```
 
 ## ⚡ Início Rápido
 
 ```typescript
-import { Client } from "@stackflow-lab/elgin-sdk";
+import { Client } from "@stackflow-lab/tef-elgin";
 
 // 1. Criar instância do cliente
 const client = Client.instance();
@@ -77,7 +77,7 @@ client.on("error", (code, message) => {
 });
 
 // 4. Realizar pagamento
-await client.payment.pix("10.00");
+await client.payment.pix(10);
 ```
 
 ## 📖 Uso
@@ -85,7 +85,7 @@ await client.payment.pix("10.00");
 ### Configuração
 
 ```typescript
-import { Client } from "@stackflow-lab/elgin-sdk";
+import { Client } from "@stackflow-lab/tef-elgin";
 
 const client = Client.instance();
 
@@ -106,39 +106,39 @@ client.configure(ip, port, {
 #### PIX
 
 ```typescript
-await client.payment.pix("50.00");
+await client.payment.pix(50);
 ```
 
 #### Cartão de Crédito
 
 ```typescript
-await client.payment.credit("100.00");
+await client.payment.credit(100);
 ```
 
 #### Cartão de Débito
 
 ```typescript
-await client.payment.debit("75.50");
+await client.payment.debit(75.5);
 ```
 
 #### Perguntar Tipo de Cartão
 
 ```typescript
 // O pinpad perguntará ao cliente qual tipo usar
-await client.payment.ask("80.00");
+await client.payment.ask(80);
 ```
 
 #### Outros Tipos
 
 ```typescript
 // Voucher (alimentação/refeição)
-await client.payment.voucher("45.00");
+await client.payment.voucher(45);
 
 // Frota
-await client.payment.fleet("200.00");
+await client.payment.fleet(200);
 
 // Private Label
-await client.payment.privateLabel("150.00");
+await client.payment.privateLabel(150);
 ```
 
 ### Operações Administrativas
@@ -186,14 +186,14 @@ client.on("waiting", (message) => {
 // Coletar texto do usuário
 client.on("collect:text", async ({ message, type, mask }) => {
   const value = await getUserInput(message);
-  client.respond(value);
+  client.input(value);
   // ou client.cancel() para cancelar
 });
 
 // Coletar opção (menu)
 client.on("collect:options", async ({ message, options }) => {
   const index = await getUserChoice(options);
-  client.respond(String(index));
+  client.input(String(index));
 });
 
 // QR Code PIX
@@ -251,7 +251,7 @@ Ative o modo debug para ver todas as chamadas DLL e respostas:
 client.enableDebug();
 
 // Realizar operações...
-await client.payment.pix("10.00");
+await client.payment.pix(10);
 
 // Desabilitar debug
 client.disableDebug();
@@ -289,19 +289,19 @@ Veja a [documentação completa de debug](docs/DEBUG.md) para mais detalhes.
 
 #### Métodos de Controle
 
-- `respond(value: string): void` - Responde à coleta
+- `input(value: string): void` - Envia valor coletado do usuário
 - `cancel(): void` - Cancela operação em andamento
 - `unload(): void` - Descarrega DLL
 
 ### PaymentApi (client.payment)
 
-- `pix(amount: string): Promise<void>` - Pagamento PIX
-- `credit(amount: string): Promise<void>` - Crédito
-- `debit(amount: string): Promise<void>` - Débito
-- `voucher(amount: string): Promise<void>` - Voucher
-- `fleet(amount: string): Promise<void>` - Frota
-- `privateLabel(amount: string): Promise<void>` - Private Label
-- `ask(amount: string): Promise<void>` - Pergunta tipo de cartão
+- `pix(amount: number): Promise<void>` - Pagamento PIX
+- `credit(amount: number): Promise<void>` - Crédito
+- `debit(amount: number): Promise<void>` - Débito
+- `voucher(amount: number): Promise<void>` - Voucher
+- `fleet(amount: number): Promise<void>` - Frota
+- `privateLabel(amount: number): Promise<void>` - Private Label
+- `ask(amount: number): Promise<void>` - Pergunta tipo de cartão
 
 ### AdminApi (client.admin)
 
@@ -375,7 +375,7 @@ Veja todos os tipos em [src/types.ts](src/types.ts).
 
 ```typescript
 import * as readline from "node:readline";
-import { Client } from "@stackflow-lab/elgin-sdk";
+import { Client } from "@stackflow-lab/tef-elgin";
 
 const client = Client.instance();
 
@@ -405,7 +405,7 @@ client.on("waiting", (msg) => console.log(`[AGUARDE] ${msg}`));
 client.on("collect:text", async ({ message, type, mask }) => {
   const value = await ask(`${message}: `);
   if (value) {
-    client.respond(value);
+    client.input(value);
   } else {
     client.cancel();
   }
@@ -415,7 +415,7 @@ client.on("collect:options", async ({ message, options }) => {
   console.log(`\n${message}`);
   options.forEach((opt, i) => console.log(`  [${i}] ${opt}`));
   const value = await ask("Escolha: ");
-  client.respond(value);
+  client.input(value);
 });
 
 client.on("qrcode", ({ data }) => {
@@ -458,7 +458,7 @@ client.on("finished", async () => {
 // Executar
 async function main() {
   const value = await ask("Valor da venda: R$ ");
-  await client.payment.credit(value);
+  await client.payment.credit(parseFloat(value));
 }
 
 main().catch(console.error);
@@ -528,8 +528,6 @@ MIT © [stackflow-lab](https://github.com/stackflow-lab)
 
 - [Documentação Elgin TEF](https://elgindevelopercommunity.github.io/group__t2.html)
 - [Changelog](CHANGELOG.md)
-- [Guia de Debug](docs/DEBUG.md)
-- [API Detalhada](docs/NEW_API.md)
 
 ## 🤝 Contribuindo
 
@@ -537,10 +535,10 @@ Contribuições são bem-vindas! Por favor, leia o [guia de contribuição](CONT
 
 ## 💬 Suporte
 
-- 📧 Email: suporte@stackflow-lab.com
-- 🐛 Issues: [GitHub Issues](https://github.com/stackflow-lab/elgin-sdk/issues)
-- 📖 Docs: [Documentação Completa](https://github.com/stackflow-lab/elgin-sdk/tree/main/docs)
+- 📧 Email: contato@stackflow.com.br
+- 🐛 Issues: [GitHub Issues](https://github.com/stackflow-lab/tef-elgin/issues)
+- 📖 Docs: [Documentação Completa](https://github.com/stackflow-lab/tef-elgin/tree/main/docs)
 
 ---
 
-**Desenvolvido com ❤️ pela [stackflow-lab](https://stackflow-lab.com)**
+**Desenvolvido com ❤️ pela [Stackflow](https://stackflow.com.br)**

@@ -246,9 +246,9 @@ export class Client extends EventEmitter<TefClientEvents> {
 
   // User response
 
-  /** Sends the user's answer to the pending collect request */
-  respond(info: string): void {
-    this._log('📤 User responded', info)
+  /** Sends the user's input to the pending collect request */
+  input(info: string): void {
+    this._log('📤 User input', info)
     this.collectResolver?.({ info, cancel: false })
     this.collectResolver = null
   }

@@ -6,7 +6,7 @@ Obrigado por considerar contribuir com o Elgin TEF SDK! 🎉
 
 ### Reportar Bugs
 
-1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/stackflow-lab/elgin-sdk/issues)
+1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/stackflow-lab/tef-elgin/issues)
 2. Crie uma nova issue com:
    - Descrição clara do problema
    - Passos para reproduzir
@@ -24,7 +24,7 @@ Obrigado por considerar contribuir com o Elgin TEF SDK! 🎉
 ### Pull Requests
 
 1. **Fork** o repositório
-2. **Clone** seu fork: `git clone https://github.com/seu-usuario/elgin-sdk.git`
+2. **Clone** seu fork: `git clone https://github.com/seu-usuario/tef-elgin.git`
 3. **Crie uma branch**: `git checkout -b feature/minha-feature`
 4. **Faça suas alterações**
 5. **Adicione testes** para novas funcionalidades
@@ -40,8 +40,8 @@ Obrigado por considerar contribuir com o Elgin TEF SDK! 🎉
 
 ```bash
 # Clonar repositório
-git clone https://github.com/stackflow-lab/elgin-sdk.git
-cd elgin-sdk
+git clone https://github.com/stackflow-lab/tef-elgin.git
+cd tef-elgin
 
 # Instalar dependências
 npm install
@@ -59,7 +59,7 @@ npm run playground
 ### Estrutura do Projeto
 
 ```
-elgin-sdk/
+tef-elgin/
 ├── src/
 │   ├── index.ts           # Exports principais
 │   ├── tef-client.ts      # Cliente principal

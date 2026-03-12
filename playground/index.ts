@@ -46,7 +46,7 @@ async function main() {
     if (value === '') {
       client.cancel()
     } else {
-      client.respond(value)
+      client.input(value)
     }
   })
 
@@ -57,7 +57,7 @@ async function main() {
     if (value === '') {
       client.cancel()
     } else {
-      client.respond(value)
+      client.input(value)
     }
   })
 
@@ -130,22 +130,22 @@ async function main() {
     switch (choice) {
       case '1': {
         const amount = await ask('  Valor do PIX: ')
-        await client.payment.pix(amount)
+        await client.payment.pix(parseFloat(amount))
         break
       }
       case '2': {
         const amount = await ask('  Valor da venda: ')
-        await client.payment.ask(amount)
+        await client.payment.ask(parseFloat(amount))
         break
       }
       case '3': {
         const amount = await ask('  Valor: ')
-        await client.payment.credit(amount)
+        await client.payment.credit(parseFloat(amount))
         break
       }
       case '4': {
         const amount = await ask('  Valor: ')
-        await client.payment.debit(amount)
+        await client.payment.debit(parseFloat(amount))
         break
       }
       case '5': {

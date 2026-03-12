@@ -20,7 +20,7 @@ describe('error handling: IniciarOperacaoTEF', () => {
     const onError = vi.fn()
     client.on('error', onError)
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(onError).toHaveBeenCalledWith('2', 'Falha ao iniciar operação TEF')
   })
@@ -31,7 +31,7 @@ describe('error handling: IniciarOperacaoTEF', () => {
     })
     client.on('error', () => {})
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(dll.FinalizarOperacaoTEF).toHaveBeenCalledWith(1)
   })
@@ -48,7 +48,7 @@ describe('error handling: transação', () => {
     const onDeclined = vi.fn()
     client.on('declined', onDeclined)
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(onDeclined).toHaveBeenCalledWith('99', 'Transação recusada')
   })
@@ -61,7 +61,7 @@ describe('error handling: transação', () => {
     const onApproved = vi.fn()
     client.on('approved', onApproved)
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(onApproved).not.toHaveBeenCalled()
   })
@@ -75,7 +75,7 @@ describe('error handling: transação', () => {
     const onFinished = vi.fn()
     client.on('finished', onFinished)
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(onFinished).toHaveBeenCalledOnce()
   })
@@ -92,7 +92,7 @@ describe('error handling: resposta inválida da DLL', () => {
     const onError = vi.fn()
     client.on('error', onError)
 
-    await client.payment.debit('10.00')
+    await client.payment.debit(10)
 
     expect(onError).toHaveBeenCalledWith('-1', 'Erro ao parsear resposta da DLL')
   })

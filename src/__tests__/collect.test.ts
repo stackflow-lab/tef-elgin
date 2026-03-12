@@ -24,7 +24,7 @@ describe('loop de coleta: texto livre', () => {
     client.on('display', onMessage)
     client.on('collect:text', onCollectText)
 
-    const payPromise = client.payment.debit('10.00')
+    const payPromise = client.payment.debit(10)
     await vi.waitFor(() => {
       expect(onCollectText).toHaveBeenCalled()
     })
@@ -34,7 +34,7 @@ describe('loop de coleta: texto livre', () => {
       expect.objectContaining({ type: 'N', mask: '##.##' }),
     )
 
-    client.respond('12345678900')
+    client.input('12345678900')
     await payPromise
   })
 
@@ -45,12 +45,12 @@ describe('loop de coleta: texto livre', () => {
         .mockReturnValueOnce(responses.transacaoOkSemConfirmacao()),
     })
 
-    const payPromise = client.payment.debit('10.00')
+    const payPromise = client.payment.debit(10)
     await vi.waitFor(() => {
       expect(getMock(dll.RealizarPagamentoTEF)).toHaveBeenCalled()
     })
 
-    client.respond('99988877766')
+    client.input('99988877766')
     await payPromise
 
     const secondCall = getMock(dll.RealizarPagamentoTEF).mock.calls[1]
@@ -66,12 +66,12 @@ describe('loop de coleta: texto livre', () => {
         .mockReturnValueOnce(responses.transacaoOkSemConfirmacao()),
     })
 
-    const payPromise = client.payment.debit('10.00')
+    const payPromise = client.payment.debit(10)
     await vi.waitFor(() => {
       expect(getMock(dll.RealizarPagamentoTEF)).toHaveBeenCalled()
     })
 
-    client.respond('valor')
+    client.input('valor')
     await payPromise
 
     const secondCall = getMock(dll.RealizarPagamentoTEF).mock.calls[1]
@@ -93,7 +93,7 @@ describe('loop de coleta: seleção de opções', () => {
     const onCollectOptions = vi.fn()
     client.on('collect:options', onCollectOptions)
 
-    const payPromise = client.payment.ask('10.00')
+    const payPromise = client.payment.ask(10)
     await vi.waitFor(() => {
       expect(onCollectOptions).toHaveBeenCalled()
     })
@@ -105,7 +105,7 @@ describe('loop de coleta: seleção de opções', () => {
       }),
     )
 
-    client.respond('1')
+    client.input('1')
     await payPromise
   })
 
@@ -116,12 +116,12 @@ describe('loop de coleta: seleção de opções', () => {
         .mockReturnValueOnce(responses.transacaoOkSemConfirmacao()),
     })
 
-    const payPromise = client.payment.ask('10.00')
+    const payPromise = client.payment.ask(10)
     await vi.waitFor(() => {
       expect(getMock(dll.RealizarPagamentoTEF)).toHaveBeenCalled()
     })
 
-    client.respond('1') // índice 1 = "Credito"
+    client.input('1') // índice 1 = "Credito"
     await payPromise
 
     const secondCall = getMock(dll.RealizarPagamentoTEF).mock.calls[1]
@@ -141,7 +141,7 @@ describe('loop de coleta: cancelamento', () => {
     })
     client.on('error', () => {})
 
-    const payPromise = client.payment.debit('10.00')
+    const payPromise = client.payment.debit(10)
     await vi.waitFor(() => {
       expect(getMock(dll.RealizarPagamentoTEF)).toHaveBeenCalled()
     })
@@ -167,15 +167,15 @@ describe('loop de coleta: cancelamento', () => {
     client.on('collect:text', (d) => {
       collectTextCalls.push(d)
       // Responde automaticamente após a emissão
-      setImmediate(() => client.respond('123'))
+      setImmediate(() => client.input('123'))
     })
     client.on('collect:options', (d) => {
       collectOptionsCalls.push(d)
       // Responde automaticamente após a emissão
-      setImmediate(() => client.respond('0'))
+      setImmediate(() => client.input('0'))
     })
 
-    await client.payment.ask('10.00')
+    await client.payment.ask(10)
 
     expect(collectTextCalls).toHaveLength(1)
     expect(collectOptionsCalls).toHaveLength(1)

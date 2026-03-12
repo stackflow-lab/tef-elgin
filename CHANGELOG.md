@@ -2,8 +2,8 @@
 
 ### Bug Fixes
 
-* restaura provenance (requer tornar repositório público no GitHub) ([ce51d9d](https://github.com/stackflow-lab/tef-elgin/commit/ce51d9dc7d2c7d4253b88f105af8e9d33ff30175))
-* update repository references and improve documentation consistency ([24e94d0](https://github.com/stackflow-lab/tef-elgin/commit/24e94d0d66ec8d79a8f9c64b2f578a4f974eeb4e))
+- restaura provenance (requer tornar repositório público no GitHub) ([ce51d9d](https://github.com/stackflow-lab/tef-elgin/commit/ce51d9dc7d2c7d4253b88f105af8e9d33ff30175))
+- update repository references and improve documentation consistency ([24e94d0](https://github.com/stackflow-lab/tef-elgin/commit/24e94d0d66ec8d79a8f9c64b2f578a4f974eeb4e))
 
 ## [1.0.1](https://github.com/stackflow-lab/tef-elgin/compare/v1.0.0...v1.0.1) (2026-03-12)
 
@@ -86,5 +86,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript type definitions
 - Example playground applications
 
-[Unreleased]: https://github.com/stackflow-lab/elgin-sdk/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/stackflow-lab/elgin-sdk/releases/tag/v0.0.1
+[Unreleased]: https://github.com/stackflow-lab/tef-elgin/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/stackflow-lab/tef-elgin/releases/tag/v0.0.1
