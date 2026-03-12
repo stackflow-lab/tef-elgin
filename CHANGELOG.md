@@ -2,19 +2,19 @@
 
 ### Bug Fixes
 
-* adiciona publishConfig com access public para permitir publicação com provenance ([f5d1ae1](https://github.com/stackflow-lab/tef-elgin/commit/f5d1ae146370a84b421e98fd704061aa9c269785))
+- adiciona publishConfig com access public para permitir publicação com provenance ([f5d1ae1](https://github.com/stackflow-lab/tef-elgin/commit/f5d1ae146370a84b421e98fd704061aa9c269785))
 
 ## 1.0.0 (2026-03-12)
 
 ### Features
 
-* enhance CI/CD workflows with NPM provenance and security improvements ([3a9b8fb](https://github.com/stackflow-lab/tef-elgin/commit/3a9b8fbe05a12cdb4194dc240d7bf709062b5d71))
-* implement CI/CD workflows with GitHub Actions and semantic release ([c8fb71d](https://github.com/stackflow-lab/tef-elgin/commit/c8fb71d0526451e5fb21f28d6b448e3da13c040c))
-* implement TEF client with payment and admin APIs ([e0875e9](https://github.com/stackflow-lab/tef-elgin/commit/e0875e96a3a6987b3cc2b7c3db565d4c939802d1))
+- enhance CI/CD workflows with NPM provenance and security improvements ([3a9b8fb](https://github.com/stackflow-lab/tef-elgin/commit/3a9b8fbe05a12cdb4194dc240d7bf709062b5d71))
+- implement CI/CD workflows with GitHub Actions and semantic release ([c8fb71d](https://github.com/stackflow-lab/tef-elgin/commit/c8fb71d0526451e5fb21f28d6b448e3da13c040c))
+- implement TEF client with payment and admin APIs ([e0875e9](https://github.com/stackflow-lab/tef-elgin/commit/e0875e96a3a6987b3cc2b7c3db565d4c939802d1))
 
 ### Bug Fixes
 
-* corrige URLs do repositório no package.json ([c086e6c](https://github.com/stackflow-lab/tef-elgin/commit/c086e6c5ab1b06f0a8fb7a0172bda5b264bed33d))
+- corrige URLs do repositório no package.json ([c086e6c](https://github.com/stackflow-lab/tef-elgin/commit/c086e6c5ab1b06f0a8fb7a0172bda5b264bed33d))
 
 # Changelog
 
@@ -79,5 +79,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - TypeScript type definitions
 - Example playground applications
 
-[Unreleased]: https://github.com/stackflowlab/elgin-sdk/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/stackflowlab/elgin-sdk/releases/tag/v0.0.1
+[Unreleased]: https://github.com/stackflow-lab/elgin-sdk/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/stackflow-lab/elgin-sdk/releases/tag/v0.0.1

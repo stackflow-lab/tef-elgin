@@ -2,8 +2,8 @@
 
 > SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos
 
-[![npm version](https://img.shields.io/npm/v/@stackflowlab/elgin-sdk.svg)](https://www.npmjs.com/package/@stackflowlab/elgin-sdk)
-[![License](https://img.shields.io/npm/l/@stackflowlab/elgin-sdk.svg)](https://github.com/stackflowlab/elgin-sdk/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@stackflow-lab/elgin-sdk.svg)](https://www.npmjs.com/package/@stackflow-lab/elgin-sdk)
+[![License](https://img.shields.io/npm/l/@stackflow-lab/elgin-sdk.svg)](https://github.com/stackflow-lab/elgin-sdk/blob/main/LICENSE)
 
 ## 📋 Índice
 
@@ -41,22 +41,22 @@
 ## 🚀 Instalação
 
 ```bash
-npm install @stackflowlab/elgin-sdk
+npm install @stackflow-lab/elgin-sdk
 ```
 
 ou
 
 ```bash
-yarn add @stackflowlab/elgin-sdk
+yarn add @stackflow-lab/elgin-sdk
 ```
 
 ## ⚡ Início Rápido
 
 ```typescript
-import { Client } from '@stackflowlab/elgin-sdk'
+import { Client } from "@stackflow-lab/elgin-sdk";
 
 // 1. Criar instância do cliente
-const client = Client.instance()
+const client = Client.instance();
 
 // 2. Configurar conexão
 client.configure("127.0.0.1", 60906, {
@@ -85,9 +85,9 @@ await client.payment.pix("10.00");
 ### Configuração
 
 ```typescript
-import { Client } from '@stackflowlab/elgin-sdk'
+import { Client } from "@stackflow-lab/elgin-sdk";
 
-const client = Client.instance()
+const client = Client.instance();
 
 // Caminho customizado para a DLL (opcional)
 // const client = Client.instance('D:\\MinhaDLL\\E1_Tef01.dll')
@@ -375,9 +375,9 @@ Veja todos os tipos em [src/types.ts](src/types.ts).
 
 ```typescript
 import * as readline from "node:readline";
-import { Client } from '@stackflowlab/elgin-sdk'
+import { Client } from "@stackflow-lab/elgin-sdk";
 
-const client = Client.instance()
+const client = Client.instance();
 
 // Configurar
 client.configure("127.0.0.1", 60906, {
@@ -520,7 +520,7 @@ process.on("SIGINT", () => {
 
 ## 📝 Licença
 
-MIT © [StackFlowLab](https://github.com/stackflowlab)
+MIT © [stackflow-lab](https://github.com/stackflow-lab)
 
 ---
 
@@ -537,10 +537,10 @@ Contribuições são bem-vindas! Por favor, leia o [guia de contribuição](CONT
 
 ## 💬 Suporte
 
-- 📧 Email: suporte@stackflowlab.com
-- 🐛 Issues: [GitHub Issues](https://github.com/stackflowlab/elgin-sdk/issues)
-- 📖 Docs: [Documentação Completa](https://github.com/stackflowlab/elgin-sdk/tree/main/docs)
+- 📧 Email: suporte@stackflow-lab.com
+- 🐛 Issues: [GitHub Issues](https://github.com/stackflow-lab/elgin-sdk/issues)
+- 📖 Docs: [Documentação Completa](https://github.com/stackflow-lab/elgin-sdk/tree/main/docs)
 
 ---
 
-**Desenvolvido com ❤️ pela [StackFlowLab](https://stackflowlab.com)**
+**Desenvolvido com ❤️ pela [stackflow-lab](https://stackflow-lab.com)**

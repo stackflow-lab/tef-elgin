@@ -1,5 +1,5 @@
 {
-  "name": "@stackflowlab/tef-elgin",
+  "name": "@stackflow-lab/tef-elgin",
   "version": "1.0.1",
   "type": "module",
   "description": "SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos",
@@ -47,7 +47,7 @@
     "sdk",
     "typescript"
   ],
-  "author": "StackFlowLab",
+  "author": "stackflow-lab",
   "license": "MIT",
   "repository": {
     "type": "git",

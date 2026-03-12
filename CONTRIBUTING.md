@@ -6,7 +6,7 @@ Obrigado por considerar contribuir com o Elgin TEF SDK! 🎉
 
 ### Reportar Bugs
 
-1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/stackflowlab/elgin-sdk/issues)
+1. Verifique se o bug já não foi reportado nas [Issues](https://github.com/stackflow-lab/elgin-sdk/issues)
 2. Crie uma nova issue com:
    - Descrição clara do problema
    - Passos para reproduzir
@@ -40,7 +40,7 @@ Obrigado por considerar contribuir com o Elgin TEF SDK! 🎉
 
 ```bash
 # Clonar repositório
-git clone https://github.com/stackflowlab/elgin-sdk.git
+git clone https://github.com/stackflow-lab/elgin-sdk.git
 cd elgin-sdk
 
 # Instalar dependências
@@ -121,7 +121,7 @@ npm run playground:debug
 
 ## Dúvidas?
 
-Abra uma issue ou entre em contato em suporte@stackflowlab.com
+Abra uma issue ou entre em contato em suporte@stackflow-lab.com
 
 ## Licença
 
