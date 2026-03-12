@@ -1,3 +1,9 @@
+## [2.0.2](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.1...v2.0.2) (2026-03-12)
+
+### Bug Fixes
+
+* update package.json exports and main module paths; add yarn error log ([d02747d](https://github.com/stackflow-lab/tef-elgin/commit/d02747da72cbc7187c65d21d35bec04ce70dd959))
+
 ## [2.0.1](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.0...v2.0.1) (2026-03-12)
 
 ### Bug Fixes
