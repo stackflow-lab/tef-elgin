@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install --save-dev typescript tsup @types/node)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm --version)",
+      "Bash(npm install koffi)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:elgindevelopercommunity.github.io)",
+      "Bash(node \"C:/nvm4w/nodejs/node_modules/npm/bin/npm-cli.js\" run playground)"
+    ]
+  }
+}
