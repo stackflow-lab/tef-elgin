@@ -13,6 +13,8 @@ import type {
   AdminOp,
   TefClientEvents,
   ApprovedEvent,
+  CollectTextEvent,
+  CollectOptionsEvent,
   PrintEvent,
   QrCodeEvent,
 } from './types.js'
@@ -67,7 +69,24 @@ function getWorkerPath(): string {
   return join(dir, 'worker.js')
 }
 
-export class Client extends EventEmitter<TefClientEvents> {
+export class Client extends EventEmitter {
+  // Typed overloads for EventEmitter methods (compatible with all @types/node versions)
+  on<K extends keyof TefClientEvents>(event: K, listener: (...args: TefClientEvents[K]) => void): this
+  on(event: string | symbol, listener: (...args: any[]) => void): this
+  on(event: string | symbol, listener: (...args: any[]) => void): this { return super.on(event, listener) }
+
+  once<K extends keyof TefClientEvents>(event: K, listener: (...args: TefClientEvents[K]) => void): this
+  once(event: string | symbol, listener: (...args: any[]) => void): this
+  once(event: string | symbol, listener: (...args: any[]) => void): this { return super.once(event, listener) }
+
+  off<K extends keyof TefClientEvents>(event: K, listener: (...args: TefClientEvents[K]) => void): this
+  off(event: string | symbol, listener: (...args: any[]) => void): this
+  off(event: string | symbol, listener: (...args: any[]) => void): this { return super.off(event, listener) }
+
+  emit<K extends keyof TefClientEvents>(event: K, ...args: TefClientEvents[K]): boolean
+  emit(event: string | symbol, ...args: any[]): boolean
+  emit(event: string | symbol, ...args: any[]): boolean { return super.emit(event, ...args) }
+
   private worker: Worker | null = null
   private mockDll: ElginDll | null = null // Para testes
   private operationType: OperationType = 'payment'
