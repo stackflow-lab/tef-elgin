@@ -16,6 +16,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -48,7 +51,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stackflow-lab/tef-elgin.git"
+    "url": "git+https://github.com/stackflow-lab/tef-elgin.git"
   },
   "bugs": {
     "url": "https://github.com/stackflow-lab/tef-elgin/issues"
