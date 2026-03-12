@@ -6,8 +6,8 @@ const DEFAULT_DLL_PATH = join('C:', 'Elgin', 'TEF', 'E1_Tef01.dll')
 export function loadElginDll(dllPath: string = DEFAULT_DLL_PATH) {
   const lib = koffi.load(dllPath)
 
-  // Todas as funções usam __stdcall e retornam ponteiro para string ANSI (char*)
-  // que koffi converte automaticamente para string JS com o tipo 'string'
+  // All functions use __stdcall and return pointer to ANSI string (char*)
+  // which koffi automatically converts to JS string with type 'string'
   return {
     GetProdutoTef: lib.func('__stdcall', 'GetProdutoTef', 'int', []),
 
@@ -15,7 +15,7 @@ export function loadElginDll(dllPath: string = DEFAULT_DLL_PATH) {
 
     SetClientTCP: lib.func('__stdcall', 'SetClientTCP', 'string', [
       'string', // ip
-      'int',    // porta
+      'int',    // port
     ]),
 
     ConfigurarDadosPDV: lib.func('__stdcall', 'ConfigurarDadosPDV', 'string', [
@@ -35,7 +35,7 @@ export function loadElginDll(dllPath: string = DEFAULT_DLL_PATH) {
     ]),
 
     RealizarPagamentoTEF: lib.func('__stdcall', 'RealizarPagamentoTEF', 'string', [
-      'int',    // codigoOperacao (0=perguntar,1=crédito,2=débito,3=voucher,4=frota,5=privatelabel)
+      'int',    // codigoOperacao (0=ask,1=credit,2=debit,3=voucher,4=fleet,5=privatelabel)
       'string', // dadosCaptura (JSON)
       'bool',   // novaTransacao
     ]),
@@ -46,18 +46,18 @@ export function loadElginDll(dllPath: string = DEFAULT_DLL_PATH) {
     ]),
 
     RealizarAdmTEF: lib.func('__stdcall', 'RealizarAdmTEF', 'string', [
-      'int',    // codigoOperacao (0=perguntar,1=cancelamento,2=pendências,3=reimpressão)
+      'int',    // codigoOperacao (0=ask,1=cancel,2=pending,3=reprint)
       'string', // dadosCaptura (JSON)
       'bool',   // novaTransacao
     ]),
 
     ConfirmarOperacaoTEF: lib.func('__stdcall', 'ConfirmarOperacaoTEF', 'string', [
-      'int', // id (sequencial)
-      'int', // acao (1=confirmar)
+      'int', // id (sequential)
+      'int', // action (1=confirm)
     ]),
 
     FinalizarOperacaoTEF: lib.func('__stdcall', 'FinalizarOperacaoTEF', 'string', [
-      'int', // id (1 = a API resolve o sequencial)
+      'int', // id (1 = the API resolves the sequential)
     ]),
 
     unload: () => lib.unload(),

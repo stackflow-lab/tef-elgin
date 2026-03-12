@@ -45,9 +45,9 @@ type WorkerResponse =
   | { type: 'error'; error: string }
 
 /**
- * Resolve o caminho do worker de forma compatível com CJS e ESM.
- * - ESM / tsx: import.meta.url está disponível
- * - CJS (tsup build): import.meta.url é string vazia, usa __dirname
+ * Resolves the worker path in a CJS and ESM compatible way.
+ * - ESM / tsx: import.meta.url is available
+ * - CJS (tsup build): import.meta.url is empty string, uses __dirname
  */
 function getWorkerPath(): string {
   const metaUrl = import.meta.url
@@ -202,7 +202,7 @@ export class Client extends EventEmitter<TefClientEvents> {
         this.workerPromiseReject = reject
         this.worker.postMessage(message)
       } else {
-        reject(new Error('Worker não inicializado'))
+        reject(new Error('Worker not initialized'))
       }
     })
   }
@@ -282,15 +282,15 @@ export class Client extends EventEmitter<TefClientEvents> {
     
     if (!startResp.tef) {
       this._log('⚠️  IniciarOperacaoTEF error', { codigo: startResp.codigo, mensagem: startResp.mensagem })
-      console.error('\n❌ Erro ao iniciar operação TEF:')
+      console.error('\n❌ Failed to start TEF operation:')
       console.error(JSON.stringify(startResp, null, 2))
-      this.emit('error', String(startResp.codigo ?? '-1'), startResp.mensagem ?? 'Falha ao iniciar operação TEF')
+      this.emit('error', String(startResp.codigo ?? '-1'), startResp.mensagem ?? 'Failed to start TEF operation')
       await this._finalize()
       return
     }
     
     if (startResp.tef.retorno !== '1') {
-      this.emit('error', startResp.tef.retorno ?? '-1', 'Falha ao iniciar operação TEF')
+      this.emit('error', startResp.tef.retorno ?? '-1', 'Failed to start TEF operation')
       await this._finalize()
       return
     }
@@ -307,9 +307,9 @@ export class Client extends EventEmitter<TefClientEvents> {
     // Check for DLL-level errors
     if (!resp.tef) {
       this._log('⚠️  DLL error response', { codigo: resp.codigo, mensagem: resp.mensagem })
-      console.error('\n❌ Erro da DLL:')
+      console.error('\n❌ DLL error:')
       console.error(JSON.stringify(resp, null, 2))
-      this.emit('error', String(resp.codigo ?? '-1'), resp.mensagem ?? 'Erro na DLL')
+      this.emit('error', String(resp.codigo ?? '-1'), resp.mensagem ?? 'DLL error')
       await this._finalize()
       return
     }
@@ -320,9 +320,9 @@ export class Client extends EventEmitter<TefClientEvents> {
     // Safety check after collect loop
     if (!resp.tef) {
       this._log('⚠️  Response missing tef after collect loop')
-      console.error('\n❌ Resposta inválida após coleta:')
+      console.error('\n❌ Invalid response after collect:')
       console.error(JSON.stringify(resp, null, 2))
-      this.emit('error', '-1', 'Resposta inválida da DLL')
+      this.emit('error', '-1', 'Invalid DLL response')
       await this._finalize()
       return
     }
@@ -371,7 +371,7 @@ export class Client extends EventEmitter<TefClientEvents> {
       }
     } else {
       this._log('❌ Emitting declined', { retorno })
-      this.emit('declined', retorno, 'Transação recusada')
+      this.emit('declined', retorno, 'Transaction declined')
     }
 
     // 6) End session
@@ -382,7 +382,7 @@ export class Client extends EventEmitter<TefClientEvents> {
     // Safety check: ensure tef object exists
     if (!resp.tef) {
       this._log('⚠️  Response missing tef object', resp)
-      console.error('\n⚠️  Resposta sem objeto tef:')
+      console.error('\n⚠️  Response missing tef object:')
       console.error(JSON.stringify(resp, null, 2))
       return resp
     }
@@ -509,7 +509,7 @@ export class Client extends EventEmitter<TefClientEvents> {
     try {
       return JSON.parse(raw) as TefResponse
     } catch {
-      return { codigo: -1, mensagem: 'Erro ao parsear resposta da DLL' }
+      return { codigo: -1, mensagem: 'Failed to parse DLL response' }
     }
   }
 

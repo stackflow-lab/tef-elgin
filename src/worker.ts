@@ -1,9 +1,9 @@
 /**
- * Worker thread que executa todas as chamadas à DLL nativa
- * Isso evita bloquear a thread principal do Node.js
+ * Worker thread that executes all native DLL calls
+ * This prevents blocking the main Node.js thread
  *
- * Este arquivo é auto-contido (não importa módulos locais) para funcionar
- * tanto em desenvolvimento (tsx) quanto compilado (tsup).
+ * This file is self-contained (doesn't import local modules) to work
+ * both in development (tsx) and compiled (tsup).
  */
 import { parentPort } from 'node:worker_threads'
 import { join } from 'node:path'
@@ -14,7 +14,7 @@ const DEFAULT_DLL_PATH = join('C:', 'Elgin', 'TEF', 'E1_Tef01.dll')
 
 function loadDll(dllPath: string = DEFAULT_DLL_PATH) {
   if (!existsSync(dllPath)) {
-    throw new Error(`DLL não encontrada: ${dllPath}`)
+    throw new Error(`DLL not found: ${dllPath}`)
   }
 
   const lib = koffi.load(dllPath)
@@ -58,7 +58,7 @@ type WorkerResponse =
 let dll: Dll | null = null
 
 if (!parentPort) {
-  throw new Error('Este arquivo deve ser executado como Worker Thread')
+  throw new Error('This file must be executed as a Worker Thread')
 }
 
 parentPort.on('message', (message: WorkerMessage) => {
@@ -71,7 +71,7 @@ parentPort.on('message', (message: WorkerMessage) => {
       }
 
       case 'configure': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         dll.SetClientTCP(message.ip, message.port)
         dll.ConfigurarDadosPDV(
           message.pdv.pinpadText,
@@ -85,42 +85,42 @@ parentPort.on('message', (message: WorkerMessage) => {
       }
 
       case 'IniciarOperacaoTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.IniciarOperacaoTEF(message.payload)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
       }
 
       case 'RealizarPagamentoTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.RealizarPagamentoTEF(message.code, message.payload, message.isNew)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
       }
 
       case 'RealizarPixTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.RealizarPixTEF(message.payload, message.isNew)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
       }
 
       case 'RealizarAdmTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.RealizarAdmTEF(message.code, message.payload, message.isNew)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
       }
 
       case 'ConfirmarOperacaoTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.ConfirmarOperacaoTEF(message.sequenceId, message.action)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
       }
 
       case 'FinalizarOperacaoTEF': {
-        if (!dll) throw new Error('DLL não carregada')
+        if (!dll) throw new Error('DLL not loaded')
         const result = dll.FinalizarOperacaoTEF(message.id)
         parentPort!.postMessage({ type: 'result', data: result } as WorkerResponse)
         break
@@ -136,7 +136,7 @@ parentPort.on('message', (message: WorkerMessage) => {
       }
 
       default: {
-        throw new Error(`Tipo de mensagem desconhecido: ${(message as any).type}`)
+        throw new Error(`Unknown message type: ${(message as any).type}`)
       }
     }
   } catch (error) {

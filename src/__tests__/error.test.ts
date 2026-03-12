@@ -22,7 +22,7 @@ describe('error handling: IniciarOperacaoTEF', () => {
 
     await client.payment.debit(10)
 
-    expect(onError).toHaveBeenCalledWith('2', 'Falha ao iniciar operação TEF')
+    expect(onError).toHaveBeenCalledWith('2', 'Failed to start TEF operation')
   })
 
   it('chama FinalizarOperacaoTEF mesmo após falha na inicialização', async () => {
@@ -50,7 +50,7 @@ describe('error handling: transação', () => {
 
     await client.payment.debit(10)
 
-    expect(onDeclined).toHaveBeenCalledWith('99', 'Transação recusada')
+    expect(onDeclined).toHaveBeenCalledWith('99', 'Transaction declined')
   })
 
   it('não emite approved quando há recusa', async () => {
@@ -94,7 +94,7 @@ describe('error handling: resposta inválida da DLL', () => {
 
     await client.payment.debit(10)
 
-    expect(onError).toHaveBeenCalledWith('-1', 'Erro ao parsear resposta da DLL')
+    expect(onError).toHaveBeenCalledWith('-1', 'Failed to parse DLL response')
   })
 })
 
