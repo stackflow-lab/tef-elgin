@@ -1,6 +1,7 @@
 {
-  "name": "@stackflowlab/elgin-sdk",
+  "name": "@stackflowlab/tef-elgin",
   "version": "0.0.1",
+  "type": "module",
   "description": "SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -21,7 +22,6 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "playground": "tsx playground/index.ts",
-    "playground:debug": "tsx playground/debug-example.ts",
     "prepublishOnly": "npm run build"
   },
   "engines": {
@@ -55,7 +55,15 @@
   },
   "homepage": "https://github.com/stackflowlab/elgin-sdk#readme",
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.0",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.1",
     "@types/node": "^25.4.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "semantic-release": "^24.2.0",
     "tsup": "^8.5.1",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3",

@@ -1,5 +1,9 @@
 import { EventEmitter } from 'node:events'
-import { loadElginDll, type ElginDll } from './loader.js'
+import { existsSync } from 'node:fs'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { Worker } from 'node:worker_threads'
+import type { ElginDll } from './loader.js'
 import { PaymentApi } from './payment.js'
 import { AdminApi } from './admin.js'
 import type {
@@ -33,13 +37,42 @@ type OperationType = 'payment' | 'pix' | 'admin'
 
 type CollectResolve = (value: { info: string; cancel: boolean }) => void
 
+type WorkerResponse = 
+  | { type: 'loaded' }
+  | { type: 'configured' }
+  | { type: 'result'; data: string }
+  | { type: 'unloaded' }
+  | { type: 'error'; error: string }
+
+/**
+ * Resolve o caminho do worker de forma compatível com CJS e ESM.
+ * - ESM / tsx: import.meta.url está disponível
+ * - CJS (tsup build): import.meta.url é string vazia, usa __dirname
+ */
+function getWorkerPath(): string {
+  const metaUrl = import.meta.url
+  const dir = metaUrl
+    ? dirname(fileURLToPath(metaUrl))
+    : __dirname
+
+  // Dev mode (tsx): worker.ts existe ao lado do source
+  const tsWorker = join(dir, 'worker.ts')
+  if (existsSync(tsWorker)) return tsWorker
+
+  // Produção: worker.mjs no dist/
+  return join(dir, 'worker.mjs')
+}
+
 export class Client extends EventEmitter<TefClientEvents> {
-  private dll: ElginDll
+  private worker: Worker | null = null
+  private mockDll: ElginDll | null = null // Para testes
   private operationType: OperationType = 'payment'
   private cardType: CardType = 'ask'
   private adminOp: AdminOp = 'ask'
   private collectResolver: CollectResolve | null = null
   private _debugEnabled = false
+  private workerPromiseResolve: ((value: string) => void) | null = null
+  private workerPromiseReject: ((reason: any) => void) | null = null
 
   /** Payment operations - use methods like payment.pix(), payment.credit(), etc. */
   public readonly payment: PaymentApi
@@ -49,10 +82,30 @@ export class Client extends EventEmitter<TefClientEvents> {
 
   constructor(dllPathOrInstance?: string | ElginDll) {
     super()
+    
+    // Se receber um mock da DLL (para testes), usa ele diretamente
     if (typeof dllPathOrInstance === 'object' && dllPathOrInstance !== null) {
-      this.dll = dllPathOrInstance
+      this.mockDll = dllPathOrInstance
     } else {
-      this.dll = loadElginDll(dllPathOrInstance)
+      // Cria Worker Thread com resolução CJS/ESM compatível
+      this.worker = new Worker(getWorkerPath())
+      
+      this.worker.on('message', (response: WorkerResponse) => {
+        if (response.type === 'result') {
+          this.workerPromiseResolve?.(response.data)
+        } else if (response.type === 'error') {
+          this.workerPromiseReject?.(new Error(response.error))
+        } else if (response.type === 'loaded' || response.type === 'configured' || response.type === 'unloaded') {
+          this.workerPromiseResolve?.('')
+        }
+      })
+      
+      this.worker.on('error', (error) => {
+        this.workerPromiseReject?.(error)
+      })
+      
+      // Carrega a DLL no worker
+      this._sendToWorker({ type: 'load', dllPath: typeof dllPathOrInstance === 'string' ? dllPathOrInstance : undefined })
     }
 
     this.payment = new PaymentApi(this)
@@ -95,18 +148,75 @@ export class Client extends EventEmitter<TefClientEvents> {
     }
   }
 
+  // Worker communication
+
+  private _sendToWorker(message: any): Promise<string> {
+    return new Promise((resolve, reject) => {
+      if (this.mockDll) {
+        // Modo teste: executa sincronamente com mock
+        try {
+          let result = ''
+          switch (message.type) {
+            case 'load':
+            case 'configured':
+            case 'unload':
+              result = ''
+              break
+            case 'IniciarOperacaoTEF':
+              result = this.mockDll.IniciarOperacaoTEF(message.payload)
+              break
+            case 'RealizarPagamentoTEF':
+              result = this.mockDll.RealizarPagamentoTEF(message.code, message.payload, message.isNew)
+              break
+            case 'RealizarPixTEF':
+              result = this.mockDll.RealizarPixTEF(message.payload, message.isNew)
+              break
+            case 'RealizarAdmTEF':
+              result = this.mockDll.RealizarAdmTEF(message.code, message.payload, message.isNew)
+              break
+            case 'ConfirmarOperacaoTEF':
+              result = this.mockDll.ConfirmarOperacaoTEF(message.sequenceId, message.action)
+              break
+            case 'FinalizarOperacaoTEF':
+              result = this.mockDll.FinalizarOperacaoTEF(message.id)
+              break
+            case 'configure':
+              this.mockDll.SetClientTCP(message.ip, message.port)
+              this.mockDll.ConfigurarDadosPDV(
+                message.pdv.pinpadText,
+                message.pdv.version,
+                message.pdv.storeName,
+                message.pdv.storeCode,
+                message.pdv.terminalId,
+              )
+              result = ''
+              break
+          }
+          resolve(result)
+        } catch (error) {
+          reject(error)
+        }
+      } else if (this.worker) {
+        // Modo produção: envia para worker
+        this.workerPromiseResolve = resolve
+        this.workerPromiseReject = reject
+        this.worker.postMessage(message)
+      } else {
+        reject(new Error('Worker não inicializado'))
+      }
+    })
+  }
+
   // Configuration
 
   async configure(ip: string, port: number, pdv: PdvConfig): Promise<void> {
     this._log('📡 Configuring client', { ip, port, pdv })
-    this.dll.SetClientTCP(ip, port)
-    this.dll.ConfigurarDadosPDV(
-      pdv.pinpadText,
-      pdv.version,
-      pdv.storeName,
-      pdv.storeCode,
-      pdv.terminalId,
-    )
+    await this._sendToWorker({
+      type: 'configure',
+      ip,
+      port,
+      pdv,
+    })
   }
 
   // User response
@@ -151,7 +261,14 @@ export class Client extends EventEmitter<TefClientEvents> {
   }
 
   unload(): void {
-    this.dll.unload()
+    if (this.worker) {
+      this._sendToWorker({ type: 'unload' }).then(() => {
+        this.worker?.terminate()
+        this.worker = null
+      })
+    } else if (this.mockDll) {
+      this.mockDll.unload()
+    }
   }
 
   // Internal flow
@@ -159,7 +276,8 @@ export class Client extends EventEmitter<TefClientEvents> {
   private async _run(amount: string): Promise<void> {
     // 1) Start session
     this._log('🚀 Starting TEF session')
-    const startResp = this._parse(this.dll.IniciarOperacaoTEF('{}'))
+    const raw = await this._sendToWorker({ type: 'IniciarOperacaoTEF', payload: '{}' })
+    const startResp = this._parse(raw)
     this._log('📥 IniciarOperacaoTEF response', startResp)
     
     if (!startResp.tef) {
@@ -336,11 +454,25 @@ export class Client extends EventEmitter<TefClientEvents> {
     let raw: string
 
     if (this.operationType === 'pix') {
-      raw = this.dll.RealizarPixTEF(json, isNew)
+      raw = await this._sendToWorker({
+        type: 'RealizarPixTEF',
+        payload: json,
+        isNew,
+      })
     } else if (this.operationType === 'admin') {
-      raw = this.dll.RealizarAdmTEF(ADMIN_OP_CODE[this.adminOp], json, isNew)
+      raw = await this._sendToWorker({
+        type: 'RealizarAdmTEF',
+        code: ADMIN_OP_CODE[this.adminOp],
+        payload: json,
+        isNew,
+      })
     } else {
-      raw = this.dll.RealizarPagamentoTEF(CARD_TYPE_CODE[this.cardType], json, isNew)
+      raw = await this._sendToWorker({
+        type: 'RealizarPagamentoTEF',
+        code: CARD_TYPE_CODE[this.cardType],
+        payload: json,
+        isNew,
+      })
     }
 
     const response = this._parse(raw)
@@ -350,13 +482,20 @@ export class Client extends EventEmitter<TefClientEvents> {
 
   private async _confirm(sequenceId: number): Promise<void> {
     this._log('✔️  Confirming transaction', { sequenceId })
-    this.dll.ConfirmarOperacaoTEF(sequenceId, 1)
+    await this._sendToWorker({
+      type: 'ConfirmarOperacaoTEF',
+      sequenceId,
+      action: 1,
+    })
     this.emit('confirmed')
   }
 
   private async _finalize(): Promise<void> {
     this._log('🏁 Finalizing operation')
-    this.dll.FinalizarOperacaoTEF(1)
+    await this._sendToWorker({
+      type: 'FinalizarOperacaoTEF',
+      id: 1,
+    })
     this.emit('finished')
   }
 
