@@ -40,8 +40,29 @@ Etapas:
 6. ✅ Análise de commits semânticos
 7. ✅ Geração automática de tag e versão
 8. ✅ Atualização do CHANGELOG
-9. ✅ Publicação no NPM
+9. ✅ Publicação no NPM com **provenance** (verificação de autenticidade)
 10. ✅ Criação de release no GitHub
+
+## Autenticação NPM
+
+O projeto usa **Trusted Publishing** com provenance para publicação segura:
+
+- **Arquivo**: `.npmrc` (versionado no repositório)
+- **Autenticação**: Via variável de ambiente `NODE_AUTH_TOKEN`
+- **Provenance**: Habilitado via `NPM_CONFIG_PROVENANCE=true`
+- **Segurança**: Elimina tokens de longa duração commitados no código
+
+O arquivo `.npmrc` contém:
+
+```
+//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+Isso garante que:
+
+- ✅ Pacotes publicados são verificáveis e rastreáveis
+- ✅ Provenance statements são gerados automaticamente
+- ✅ Maior segurança usando tokens granulares do NPM
 
 ## Commits Semânticos
 
@@ -110,14 +131,22 @@ git commit -m "feat: implementa retry automático
 
 ## Configuração Necessária
 
-### 1. NPM Token
+### 1. NPM Token (Granular Access Token)
 
-Crie um token no NPM:
+O projeto usa **Trusted Publishing** com provenance para maior segurança na publicação.
+
+Crie um **Granular Access Token** no NPM:
 
 1. Acesse https://www.npmjs.com/settings/YOUR_USERNAME/tokens
-2. Clique em "Generate New Token"
-3. Escolha "Automation" type
-4. Copie o token
+2. Clique em "Generate New Token" > "Granular Access Token"
+3. Configure:
+   - **Token Name**: `GitHub Actions - Elgin SDK`
+   - **Expiration**: Escolha um período (recomendado: 1 ano)
+   - **Packages and scopes**:
+     - Selecione "Read and write"
+     - Escolha o pacote `@stackflowlab/elgin-sdk`
+   - **Organizations**: Selecione sua organização se aplicável
+4. Copie o token (começa com `npm_...`)
 
 Adicione como secret no GitHub:
 
@@ -125,6 +154,8 @@ Adicione como secret no GitHub:
 2. Clique em "New repository secret"
 3. Nome: `NPM_TOKEN`
 4. Valor: Cole o token do NPM
+
+> **Nota**: O workflow usa `NPM_CONFIG_PROVENANCE=true` para gerar provenance statements automaticamente, garantindo autenticidade e rastreabilidade dos pacotes publicados.
 
 ### 2. Permissões do GitHub Token
 
