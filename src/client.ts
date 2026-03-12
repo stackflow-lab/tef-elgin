@@ -59,7 +59,11 @@ function getWorkerPath(): string {
   const tsWorker = join(dir, 'worker.ts')
   if (existsSync(tsWorker)) return tsWorker
 
-  // Produção: worker.js no dist/
+  // Produção CJS: worker.cjs (compatível com Electron/CJS context)
+  const cjsWorker = join(dir, 'worker.cjs')
+  if (existsSync(cjsWorker)) return cjsWorker
+
+  // Produção ESM: worker.js no dist/
   return join(dir, 'worker.js')
 }
 

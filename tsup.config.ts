@@ -16,11 +16,11 @@ export default defineConfig([
       options.logOverride = { 'empty-import-meta': 'silent' }
     },
   },
-  // Worker (worker.ts) somente em ESM (usa top-level await)
+  // Worker (worker.ts) em CJS + ESM para compatibilidade com Electron (CJS)
   {
     entry: ['src/worker.ts'],
     target: 'node22',
-    format: ['esm'], // Só ESM
+    format: ['cjs', 'esm'],
     dts: true,
     external: ['koffi'],
     splitting: false,
