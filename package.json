@@ -1,6 +1,6 @@
 {
   "name": "@stackflow-lab/tef-elgin",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "type": "module",
   "description": "SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos",
   "main": "./dist/index.cjs",

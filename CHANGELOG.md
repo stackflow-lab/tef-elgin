@@ -1,3 +1,9 @@
+## [2.1.0](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.3...v2.1.0) (2026-03-12)
+
+### Features
+
+* enhance Client class with typed EventEmitter methods and update tsconfig for type definitions ([0bbf2d9](https://github.com/stackflow-lab/tef-elgin/commit/0bbf2d9f03df95133d465a830e6b836a8a97c6fb))
+
 ## [2.0.3](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.2...v2.0.3) (2026-03-12)
 
 ### Bug Fixes
