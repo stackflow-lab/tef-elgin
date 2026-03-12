@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/stackflow-lab/tef-elgin/compare/v2.1.0...v2.1.1) (2026-03-12)
+
+### Bug Fixes
+
+* optimize collect handling by reusing promise for _waitCollect ([6826585](https://github.com/stackflow-lab/tef-elgin/commit/6826585fca26a620b784f594c2c4cab2f7b5d80f))
+
 ## [2.1.0](https://github.com/stackflow-lab/tef-elgin/compare/v2.0.3...v2.1.0) (2026-03-12)
 
 ### Features
