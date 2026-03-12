@@ -1,0 +1,119 @@
+Arguments: 
+  C:\nvm4w\nodejs\node.exe C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js build
+
+PATH: 
+  C:\Program Files\PowerShell\7;c:\Users\Joelson\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\Joelson\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\libnvvp;C:\Python311\Scripts\;C:\Python311\;C:\Python39\Scripts\;C:\Python39\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\tools\php80;C:\ProgramData\ComposerSetup\bin;C:\Program Files\OpenJDK\openjdk-8u302-b08\bin;C:\Users\Joelson\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\dotnet\;C:\Program Files (x86)\cloudflared\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2024.3.0\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Program Files\PowerShell\7\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\Joelson\AppData\Local\nvm;C:\nvm4w\nodejs;;C:\Elgin\TEF\Provider3\bin;C:\Elgin\TEF;C:\Program Files\Go\bin;C:\Program Files\nodejs\;C:\Users\Joelson\.local\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\tools\php80;C:\ProgramData\ComposerSetup\bin;C:\Program Files\OpenJDK\openjdk-8u302-b08\bin;C:\Users\Joelson\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\dotnet\;C:\Users\Joelson\AppData\Local\Microsoft\WindowsApps;C:\Users\Joelson\AppData\Roaming\Composer\vendor\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Users\Joelson\.dotnet\tools;C:\Users\Joelson\.dotnet\tools;C:\Users\Joelson\AppData\Roaming\npm;C:\Users\Joelson\AppData\Local\Programs\Ollama;C:\Users\Joelson\AppData\Local\Microsoft\WindowsApps;C:\Users\Joelson\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Users\Joelson\go\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  22.22.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: Failed to replace env in config: ${NODE_AUTH_TOKEN}
+      at C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:94933:13
+      at String.replace (<anonymous>)
+      at envReplace (C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:94928:16)
+      at Function.normalizeConfig (C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:31938:69)
+      at NpmRegistry.<anonymous> (C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:31968:34)
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\Joelson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "@stackflow-lab/tef-elgin",
+    "version": "2.0.0",
+    "type": "module",
+    "description": "SDK Node.js para integração com Elgin TEF - Terminal de pagamentos eletrônicos",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/index.cjs"
+        },
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      }
+    },
+    "files": [
+      "dist",
+      "LICENSE",
+      "README.md"
+    ],
+    "publishConfig": {
+      "access": "public"
+    },
+    "scripts": {
+      "build": "tsup",
+      "dev": "tsup --watch",
+      "test": "vitest run",
+      "test:watch": "vitest",
+      "playground": "tsx playground/index.ts",
+      "prepublishOnly": "npm run build"
+    },
+    "engines": {
+      "node": ">=22"
+    },
+    "os": [
+      "win32"
+    ],
+    "keywords": [
+      "elgin",
+      "tef",
+      "payment",
+      "pagamento",
+      "pos",
+      "terminal",
+      "pinpad",
+      "pix",
+      "credit-card",
+      "debit-card",
+      "sdk",
+      "typescript"
+    ],
+    "author": "stackflow-lab",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/stackflow-lab/tef-elgin.git"
+    },
+    "bugs": {
+      "url": "https://github.com/stackflow-lab/tef-elgin/issues"
+    },
+    "homepage": "https://github.com/stackflow-lab/tef-elgin#readme",
+    "devDependencies": {
+      "@semantic-release/changelog": "^6.0.3",
+      "@semantic-release/commit-analyzer": "^13.0.0",
+      "@semantic-release/git": "^10.0.1",
+      "@semantic-release/github": "^11.0.0",
+      "@semantic-release/npm": "^12.0.1",
+      "@semantic-release/release-notes-generator": "^14.0.1",
+      "@types/node": "^25.4.0",
+      "conventional-changelog-conventionalcommits": "^8.0.0",
+      "semantic-release": "^24.2.0",
+      "tsup": "^8.5.1",
+      "tsx": "^4.19.2",
+      "typescript": "^5.9.3",
+      "vitest": "^4.0.18"
+    },
+    "dependencies": {
+      "koffi": "^2.15.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

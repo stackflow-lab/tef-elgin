@@ -59,8 +59,8 @@ function getWorkerPath(): string {
   const tsWorker = join(dir, 'worker.ts')
   if (existsSync(tsWorker)) return tsWorker
 
-  // Produção: worker.mjs no dist/
-  return join(dir, 'worker.mjs')
+  // Produção: worker.js no dist/
+  return join(dir, 'worker.js')
 }
 
 export class Client extends EventEmitter<TefClientEvents> {
