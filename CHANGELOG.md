@@ -1,3 +1,15 @@
+## 1.0.0 (2026-03-12)
+
+### Features
+
+* enhance CI/CD workflows with NPM provenance and security improvements ([3a9b8fb](https://github.com/stackflow-lab/tef-elgin/commit/3a9b8fbe05a12cdb4194dc240d7bf709062b5d71))
+* implement CI/CD workflows with GitHub Actions and semantic release ([c8fb71d](https://github.com/stackflow-lab/tef-elgin/commit/c8fb71d0526451e5fb21f28d6b448e3da13c040c))
+* implement TEF client with payment and admin APIs ([e0875e9](https://github.com/stackflow-lab/tef-elgin/commit/e0875e96a3a6987b3cc2b7c3db565d4c939802d1))
+
+### Bug Fixes
+
+* corrige URLs do repositório no package.json ([c086e6c](https://github.com/stackflow-lab/tef-elgin/commit/c086e6c5ab1b06f0a8fb7a0172bda5b264bed33d))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
